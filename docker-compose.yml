@@ -4,15 +4,25 @@ services:
     ports:
       - "8080:80"
     restart: always
+    networks:
+      - devops-network
 
   database:
     image: mongo:latest
     container_name: mongodb-adam
     ports:
       - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     volumes:
       - mongo-data:/data/db
     restart: always
+    networks:
+      - devops-network
 
 volumes:
   mongo-data:
+
+networks:
+  devops-network:
